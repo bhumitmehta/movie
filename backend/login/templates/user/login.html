@@ -1,0 +1,56 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block body_block %}
+    <div class="login login-container d-flex  justify-content-center align-items-center">
+        <div class="login-box d-flex p-3 p-sm-5 flex-column">
+            <h2 class="text-center">Login</h2>
+            <form class="d-inline-flex m-auto flex-column  form-detail" method="post" id="login-form">
+                <div class="form-row py-2 d-flex flex-column">
+                    <div class="position-relative">
+                        <input type="text" placeholder="Email" id="email" class="input-text" name="email"
+                               autocomplete="email" autofocus required pattern=".*\S.*"/>
+                        <span class="highlight"></span>
+                        <label for="email">
+                            Email
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row py-2 d-flex flex-column">
+                    <div class="position-relative">
+                        <input type="password" placeholder="Password" id="password" name="password"
+                               autocomplete="current-password"
+                               required pattern=".*\S.*"/>
+                        <span class="highlight"></span>
+                        <label for="password">
+                            Password
+                        </label>
+                    </div>
+                    <a href="/" class="btn-link"><small>Forgot Password ?</small></a>
+                </div>
+                <div class="form-row-last py-2">
+                    <input type="submit" class="btn btn-primary w-100" name="submit" id="submit"/>
+                </div>
+            </form>
+            <div class="d-flex flex-column">
+                <p class="text-center text-muted pt-4 pb-2">Or login with</p>
+                <div class="d-flex">
+                    <button class="btn-fb mb-3" id="facebook-login">
+                        <i class="fa fa-facebook-official"></i>
+                        Facebook
+                    </button>
+                    <button class="btn-google mb-3" id="google-login">
+                        <img src="{% static 'img/icon-google.png' %}" alt="google icon">
+                        Google
+                    </button>
+                </div>
+            </div>
+            <div>
+                <p class="text-center" style="font-family: 'Raleway', sans-serif">
+                    Not a member?
+                    <a href="{% url 'login:register' %}">Sign Up Now</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

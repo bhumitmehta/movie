@@ -1,0 +1,137 @@
+{% extends 'movieDetail/base.html' %}
+{% load static %}
+{% block body_block %}
+    <div id="movie-detail" class="container-fluid bg-dark text-white movie-detail-container"
+         style="height:100vh;">
+        <img id="cover_image"
+             class="cover-photo"
+             src="{{ movie.get_cover_photo }}"
+             alt="cover"/>
+        <div class="row movie-detail-row h-100">
+            <div class="col col-md-1 d-none flex-column align-items-center justify-content-center d-md-flex h-auto">
+                <div class="row d-flex flex-column justify-content-sm-between">
+                    <div class="col">
+                        <p class="vertical-text">Facebook</p>
+                    </div>
+                    <div class="col">
+                        <p class="vertical-text pipe-icon">|</p>
+                    </div>
+                    <div class="col">
+                        <p class="vertical-text">Instagram</p>
+                    </div>
+                    <div class="col">
+                        <p class="vertical-text pipe-icon">|</p>
+                    </div>
+                    <div class="col">
+                        <p class="vertical-text">Twitter</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-8 px-0 px-md-2 h-auto">
+                <div class="container d-flex flex-column">
+                    <div class="jumbotron bg-transparent">
+                        <h4>
+                            <span class="display-4 font-weight-bold pr-3 ls-spread">{{ movie.title }}</span>
+                            <span>
+                  <i class="material-icons-round yellow rating-icon h3 star-icon">star_rate</i>
+                  <strong class="h3">{{ movie.rating }}</strong>
+              </span>
+                        </h4>
+                        <p class="lead">
+                            <span style="vertical-align: text-top;">{{ movie.year }}</span>
+                            <span class="pipe-icon">|</span>
+                            {% for genre in movie.genre %}
+                                <span><small>{{ genre }}</small></span>
+                                <span><small class="text-primary">&bull;</small></span>
+                            {% endfor %}
+                            <span><small>{{ movie.duration }} m</small></span>
+                        </p>
+                        <div class="d-flex flex-row btn-group-sm justify-content-between justify-content-md-start"
+                             role="group"
+                             aria-label="Detail button group">
+                            <button type="button" id="like" class="btn btn-lg mr-3 d-inline-flex flex-column
+                text-white-50 align-items-center"
+                                    aria-label="Like" data-state="0">
+                  <span class="material-icons-round">
+                      thumb_up
+                  </span>
+                                <span class="text-white-50">
+                        0
+                    </span>
+                            </button>
+                            <button type="button" id="dislike" class="btn btn-lg mr-3 d-inline-flex flex-column
+                text-white-50 align-items-center"
+                                    aria-label="dislike" data-state="0">
+                  <span class="material-icons-round">
+                      thumb_down
+                  </span>
+                                <span class="text-white-50">
+                        0
+                    </span>
+                            </button>
+                            <button type="button"
+                                    class="btn btn-lg mr-3 d-inline-flex flex-column
+                text-white-50 align-items-center" id="watch-later" data-state="0">
+                  <span class="material-icons-round px-2">
+                      watch_later
+                  </span>
+                                <span class="px-2">Later</span>
+                            </button>
+                            <button type="button" id="favorite" class="btn btn-lg mr-3" aria-label="Like"
+                                    data-state="0">
+                                <span class="fa fa-heart-o text-secondary h4 m-0"></span>
+                                <span class="text-white-50">
+                                    favorite
+                                </span>
+                            </button>
+                        </div>
+                        <div class="container my-4 px-0 px-md-2">
+                            <h4>Introduction</h4>
+                            <p class="lead">
+                                {{ movie.get_description_start }}<span id="dots">...</span>
+                                <span id="more-description"
+                                      style="display: none;">{{ movie.get_description_end }}</span>
+                            </p>
+                            <button type="button" class="btn text-secondary bg-transparent border-0"
+                                    id="moreButton" data-toggle="button" aria-pressed="true">
+                                <span id="moreButtonText">Read more</span> &#10230;
+                            </button>
+                        </div>
+                        <div class="container my-4">
+                            <h4>Trailer</h4>
+                            <div id="youtube-trailer"></div>
+                            <div class="youtube-thumbnails-container">
+                                {% with movie.get_trailer_id as trailer_ids %}
+                                    {% for trailer_id in trailer_ids %}
+                                        <div class="youtube-thumbnail">
+                                            <img height="200" data-video="{{ trailer_id }}"
+                                                 alt="Play the trailer"
+                                                 src="https://img.youtube.com/vi/{{ trailer_id }}/mqdefault.jpg"/>
+                                        </div>
+                                    {% endfor %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-1 col-md-3 d-flex flex-column justify-content-end h-md-inherit">
+                <div class="text-center m-4 mb-0 mb-md-5 pb-0 pb-md-4 d-flex justify-content-center
+                align-items-center sonar-container">
+                    <div class="sonar-wrapper mb-5 mx-2">
+                        <a href="{% url 'watch_video:watch_movie_page' movie_id=movie.id %}"
+                           class="btn btn-lg btn-secondary p-0 d-inline-flex align-items-center
+                              justify-content-between rounded-circle shadow-lg  sonar-emitter">
+                          <span class="material-icons-round icon p-3">
+                              play_arrow
+                          </span>
+                        </a>
+                        <div class="sonar-wave"></div>
+                    </div>
+                    <span class="text-white mx-3 mb-5 p-0 d-none d-md-block">Watch Movie</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ movie.cover_photos|json_script:"COVER_PHOTOS" }}
+{% endblock %}

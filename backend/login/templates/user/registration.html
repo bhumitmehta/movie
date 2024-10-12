@@ -1,0 +1,84 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block body_block %}
+    <div class="registration login-container d-flex  justify-content-center align-items-center">
+        <div class="login-box d-flex p-3 p-sm-5 flex-column">
+            <h2 class="text-center">Sign Up</h2>
+            <form class="d-inline-flex m-auto flex-column  form-detail" method="post" id="signupform">
+                {% csrf_token %}
+                <div class="form-row py-2 d-flex flex-column">
+                    <div class="position-relative input-container">
+                        <input type="text" placeholder="Full Name" id="fullname" class="input-text" name="fullname"
+                               autocomplete="given-name family-name" autofocus required pattern=".*\S.*"/>
+                        <span class="highlight"></span>
+                        <label for="fullname">
+                            Full Name
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row py-2 d-flex flex-column">
+                    <div class="position-relative input-container">
+                        <input type="text" placeholder="Email" id="email" class="input-text" name="email"
+                               autocomplete="email" required pattern=".*\S.*"/>
+                        <span class="highlight"></span>
+                        <label for="email">
+                            Email
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row py-2 d-flex flex-column">
+                    <div class="position-relative input-container">
+                        <input type="password" placeholder="Password" id="password" name="password"
+                               autocomplete="new-password" minlength="1" maxlength="16"
+                               required/>
+                        <span class="highlight"></span>
+                        <label for="password">
+                            Password
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row py-2 d-flex flex-column">
+                    <div class="position-relative input-container">
+                        <input type="password" placeholder="Confirm Password" id="confirm-password"
+                               name="confirm_password" required autocomplete="off"/>
+                        <span class="highlight"></span>
+                        <label for="confirm-password">
+                            Confirm Password
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row py-2 d-flex flex-row form-check">
+                    <input type="checkbox" name="check_terms_cond" id="check-terms-cond"
+                           class="form-check-input" required/>
+                    <label for="check-terms-cond" class="form-check-label d-flex flex-wrap">
+                        <span class="mx-1">By signing up, you agree to the</span>
+                        <span class="mx-1"><a href="#">Play Term of Service</a></span>
+                    </label>
+                </div>
+                <div class="form-row-last py-2">
+                    <input type="submit" class="btn btn-primary w-100" name="Sign Up" value="Sign Up" id="submit"/>
+                </div>
+            </form>
+            <div class="d-flex flex-column">
+                <p class="text-center text-muted pt-4 pb-2">Or login with</p>
+                <div class="d-flex">
+                    <button class="btn-fb mb-3" id="facebook-signup">
+                        <i class="fa fa-facebook-official"></i>
+                        Facebook
+                    </button>
+                    <button class="btn-google mb-3" id="google-signup">
+                        <img src="{% static 'img/icon-google.png' %}" alt="google icon">
+                        Google
+                    </button>
+                </div>
+            </div>
+            <div>
+                <p class="text-center" style="font-family: 'Raleway', sans-serif">
+                    Already a member?
+                    <a href="{% url 'login:user_login' %}">Log In Now</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/registration.js' %}"></script>
+{% endblock %}
